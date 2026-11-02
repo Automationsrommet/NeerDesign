@@ -1,10 +1,25 @@
 $fn=12;
 
+figur();
+//snitt();
+
+module figur(){
 ytre();
 //indre();
 voksen();
 barn();
+}
 
+module snitt(){
+difference(){
+union(){
+ytre();
+voksen();
+barn();
+}
+translate([-2000,0,0])cube(4000,center=true);
+}
+}
 module ytre(){
 translate([0,0,-600])
 cylinder(600,150,150,center=false);
@@ -67,7 +82,7 @@ color("white")
 hull(){
 for(i=[-1:2:1])
 for(j=[-1:2:1])
-translate([i*100,j*60+280,90])sphere(40,$fn=6);
+translate([i*100,j*60+280,90])sphere(50,$fn=6);
 }
 color("white")
 hull(){
