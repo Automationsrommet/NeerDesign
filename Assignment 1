@@ -1,0 +1,22 @@
+s=((1982-1954)/20)*1000;
+color("white")
+hull(){
+for(j=[-s/2:100:s/2])
+translate([j,0,0])
+rotate([0,90,0])
+rotate([0,0,45])
+linear_extrude(1)
+circle(0.005*s*sqrt(2),$fn=4);
+}
+color("gray"){
+for (i=[-1:2:1])
+translate([i*s/2,0,0]){
+cube([0.01*s,s/2,0.01*s],center=true);
+rotate([0,0,45])
+cylinder(s/4,0.005*s*sqrt(2),0.005*s*sqrt(2),center=false,$fn=4);
+}
+translate([0,0,s/4])
+rotate([-45,0,0])
+translate([0,s/8*sqrt(2),0])
+cube([s,s/4*sqrt(2),1],center=true);
+}
