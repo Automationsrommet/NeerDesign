@@ -1,14 +1,37 @@
 $fn=12;
+k=3;
+//figur();
+snitt();
+vind();
 
-figur();
-//snitt();
+module vind() {
+for (i=[1:30:100])
+rotate([0,0,45])
+translate([-900,i*5,300])
+
+rotate([90,0,0])
+arrow(400);
+}
+
+module arrow(length){
+rotate([90,0,0])
+linear_extrude(5)
+polygon([[0,5*k],[length,5*k],[length,10*k],[length+10*k,0],[length,-10*k],[length,-5*k],[0,-5*k]]);
+}
 
 module figur(){
 ytre();
 //indre();
 voksen();
+//rotate([0,0,-45]){
 barn();
+difference(){
+indre();
+translate([0,570,0])cube(1000,center=true);
+translate([0,00,800])cube(1000,center=true);
 }
+//translate([0,50,350])cube([550,50,100],center=true);
+}//}
 
 module snitt(){
 difference(){
@@ -16,9 +39,17 @@ union(){
 ytre();
 voksen();
 barn();
+translate([0,50,350])cube([550,50,100],center=true);
+difference(){
+indre();
+translate([0,570,0])cube(1000,center=true);
+translate([0,00,800])cube(1000,center=true);
 }
-translate([-2000,0,0])cube(4000,center=true);
 }
+rotate([0,0,-45])
+translate([1950,0,0])cube(4000,center=true);
+}
+
 }
 module ytre(){
 translate([0,0,-600])
@@ -59,8 +90,6 @@ cylinder(40,360/2,360/2);
 translate([0,-600,0 ])cube(1000,center=true);
 }
 }
-
-
 }
 
 module voksen(){
