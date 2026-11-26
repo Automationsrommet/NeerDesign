@@ -1,8 +1,183 @@
 s=((1982-1954)/20)*1000;
+per=PI/2;
+f=per*0.866;
+farge=["red","orange", "yellow","green", "cyan", "blue", "indigo"];
+scaler=66;
+jscaler=1;
+phase=0;
+jphase=0;
+//jvalues=[[7][314],[0][314],[0][314],[0][314],[0][314],[0][314],[0][314]];
+//echo(len(jvalues));
+//odde(per*0.866,1,1);
+//par(per*1,1);
+odde(per*1.5,0,1);
+//par(per*2,1);
+//odde(per*0.866+3,0.5,1);
+translate([0,0,75+15+40])scale(0.5)generator();
+//visuals();
+//integrals();
+echo(PI/2);
+//vintegrals();
+//kintegrals();
+//sumofseries();
+module sumofseries(){
+for (j=[1:1:6])
+for (i=[0:0.01:PI]){
+translate([2100+20*i,20,
+(
+
+7*sin(i*scaler*jscaler+phase+jphase)
+*sin(j*i*scaler*jscaler+phase+jphase)
+-6*cos(i*scaler*jscaler+phase+jphase)
+*sin(j*i*scaler*jscaler+phase+jphase)
+)
+*10*cos((j-1)*(j-11)*PI)
+
+*sin(j*i*scaler+phase)
+])
+if (j==1){color(farge[j-1])sphere(1,$fn=3);}
+
+}
+}
+module integrals(){
+for (j=[1:1:6])
+for (i=[0:0.001:PI]){
+translate([1900+20*i,20*j,
+(
+7*sin(i*scaler*jscaler*j+phase+jphase*j)
+*sin(j*i*scaler*jscaler*j+phase+jphase*j)
+-6*cos(i*scaler*jscaler*j+phase+jphase*j)
+*sin(j*i*scaler*jscaler*j+phase+jphase*j)
+)
+//*10*cos((j-1)*(j-11)*PI)
+
+//*sin(j*i*scaler+phase)
+])
+color(farge[j-1])sphere(1,$fn=3);
+
+}
+}
+module kintegrals(){
+for (j=[1:1:6])
+for (i=[0:0.001:PI]){
+translate([2000+20*i,20*j,
+(
+7*sin(i*scaler*jscaler*j+phase+jphase*j)
+*sin(j*i*scaler*jscaler*j+phase+jphase*j)
+-6*cos(i*scaler*jscaler*j+phase+jphase*j)
+*sin(j*i*scaler*jscaler*j+phase+jphase*j)
+)
+*10*cos((j-1)*(j-11)*PI)
+
+*sin(j*i*scaler+phase)
+])
+color(farge[j-1])sphere(1,$fn=3);
+
+}
+}
+module vintegrals(){
+for (j=[1:1:6])
+for (i=[0:0.01:PI]){
+translate([1800+20*i,20*j,
+(1
+//7*sin(i*scaler*jscaler*j+phase+jphase*j)
+//*sin(j*i*scaler*jscaler*j+phase+jphase*j)
+//-6*cos(i*scaler*jscaler*j+phase+jphase*j)
+//*sin(j*i*scaler*jscaler*j+phase+jphase*j)
+)
+*10*cos((j-1)*(j-11)*PI)
+
+*sin(j*i*scaler+phase)
+])
+color(farge[j-1])sphere(1,$fn=3);
+
+}
+}
+module visuals(){
+for(k=[0:0.2:PI/2])
+    for (i=[0:0.01:2*PI])
+    for(j=[1:1:6])
+    {
+    tt=(j-1)*(j-1);
+        translate([1000+i*100,j*300,100*sin(j*i*100)*cos(tt*PI)])
+  color(farge[j-1])sphere(1,$fn=3);
+   //translate([1000,j*300,0])color(farge[j-1])
+   
+
+//cylinder(100*cos(j^2*k),20,20,center=false);
+}
+   }
+module boy() {
+for (i=[0:5:80])
+rotate([0,i,0])
+translate([0,0,-25])
+color("gray")hull(){
+for(j=[0:10:10])
+rotate([0,j,0])
+translate([0,0,-25])
+rotate([0,90,0])
+cylinder(2,15,15,center=true);
+}
+}
+   
+module generator(){
+for(i=[-1:2:1])
+for(j=[-1:2:1])
+for(k=[-1:2:1]){
+color("gray")
+translate([i*250,j*200,0])
+cylinder(270, 15,15,center=true);
+color("gray")
+translate([i*250,0,180])rotate([90,0,0])
+cylinder(300, 15,15,center=true);
+color("gray")
+translate([0,j*200,-180])rotate([0,90,0])
+cylinder(400, 15,15,center=true);
+translate([-200,j*200,-130])boy();
+translate([200,j*200,-130])rotate(180)boy();
+translate([250*i,-150*j,130])
+rotate([180,0,90*j])boy();
+
+color("black")
+translate([0,50,-50])rotate([0,-90,0])
+cylinder(200,100,100,center=false);
+color("silver")
+translate([0,-50,-50])rotate([0,90,0])
+cylinder(200,100,100,center=false);
+color("red")hull(){
+for(l=[-1:2:1])
+for(m=[-1:2:1])
+for(n=[-1:2:1])
+translate([l*200,m*160-5,10*n+150])
+sphere(40);
+}
+translate([0,-180,80])
+color("red")
+minkowski(){
+cube([440,10,190],center=true);
+sphere(20);
+}
+translate([0,-195,80])
+color("gray")
+minkowski(){
+cube([300,10,80],center=true);
+sphere(10);
+}
+translate([100*i,0,-170])color("gray")
+cube([80,380,20],center=true);
+}
+}
+module odde(fr,offset,flip){
 color("white")
+//hull(){
+for(j=[-s/2:4:s/2])
 hull(){
-for(j=[-s/2:100:s/2])
-translate([j,0,0])
+translate([j-2,0,flip*30*(cos((j-2)/(PI*2)*fr)+offset)])
+rotate([0,90,0])
+rotate([0,0,45])
+linear_extrude(1)
+circle(0.005*s*sqrt(2),$fn=4);
+translate([j+2,0,flip*30*(cos((j+2)/(PI*2)*fr)+offset)])
 rotate([0,90,0])
 rotate([0,0,45])
 linear_extrude(1)
@@ -19,4 +194,34 @@ translate([0,0,s/4])
 rotate([-45,0,0])
 translate([0,s/8*sqrt(2),0])
 cube([s,s/4*sqrt(2),1],center=true);
+}
+}
+module par(fre,flip){
+color("white")
+//hull(){
+for(j=[-s/2:4:s/2])
+hull(){
+translate([j-2,0,flip*30*(sin((j-2)/(PI*2)*fre)+0)])
+rotate([0,90,0])
+rotate([0,0,45])
+linear_extrude(1)
+circle(0.005*s*sqrt(2),$fn=4);
+translate([j+2,0,flip*30*(sin((j+2)/(PI*2)*fre)+0)])
+rotate([0,90,0])
+rotate([0,0,45])
+linear_extrude(1)
+circle(0.005*s*sqrt(2),$fn=4);
+}
+color("gray"){
+for (i=[-1:2:1])
+translate([i*s/2,0,0]){
+cube([0.01*s,s/2,0.01*s],center=true);
+rotate([0,0,45])
+cylinder(s/4,0.005*s*sqrt(2),0.005*s*sqrt(2),center=false,$fn=4);
+}
+translate([0,0,s/4])
+rotate([-45,0,0])
+translate([0,s/8*sqrt(2),0])
+cube([s,s/4*sqrt(2),1],center=true);
+}
 }
